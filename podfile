@@ -1,0 +1,11 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'xUI' do
+  pod 'Masonry'
+  pod 'MJRefresh'
+  pod 'PromisesObjC'
+  pod 'SDWebImage'
+  pod 'KVOController'
+  #pod 'xUtil',        :git => "git@github.com:jinsikui/xUtil.git", :branch => 'develop'
+end

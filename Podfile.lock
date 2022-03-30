@@ -1,0 +1,34 @@
+PODS:
+  - KVOController (1.2.0)
+  - Masonry (1.1.0)
+  - MJRefresh (3.7.2)
+  - PromisesObjC (2.0.0)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
+
+DEPENDENCIES:
+  - KVOController
+  - Masonry
+  - MJRefresh
+  - PromisesObjC
+  - SDWebImage
+
+SPEC REPOS:
+  trunk:
+    - KVOController
+    - Masonry
+    - MJRefresh
+    - PromisesObjC
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+
+PODFILE CHECKSUM: 09a1add46327b4d5c9d5c1f9461e702ba6f4714f
+
+COCOAPODS: 1.10.0
