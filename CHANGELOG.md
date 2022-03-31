@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* code complete ([40cd151](https://github.com/jinsikui/xUI/commit/40cd151f0bca402b78bd7d4998facb8f3ce8845b))
+* code complete ([07c1cfb](https://github.com/jinsikui/xUI/commit/07c1cfb48ad0488db67b858d3f3523e108b0b742))
 
 ## 1.0.0-1 (2022-03-30)
 
