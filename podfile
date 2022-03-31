@@ -7,5 +7,6 @@ target 'xUI' do
   pod 'PromisesObjC'
   pod 'SDWebImage'
   pod 'KVOController'
-  #pod 'xUtil',        :git => "git@github.com:jinsikui/xUtil.git", :branch => 'develop'
+  pod 'AFNetworking', '~>2.6.3'
+  pod 'xUtil',        :git => "https://github.com/jinsikui/xUtil.git", :branch => 'master'
 end
