@@ -7,5 +7,6 @@ target 'xUI' do
   pod 'PromisesObjC'
   pod 'SDWebImage'
   pod 'KVOController'
+  pod 'ReactiveObjC'
   pod 'xUtil',        :git => "https://github.com/jinsikui/xUtil.git", :tag => 'v2.1.0-0'
 end

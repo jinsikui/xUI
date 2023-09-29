@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		12059CF7F2385552F9EE91FB /* libPods-xUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947BAB1CCC3D4BF7A4330E8C /* libPods-xUI.a */; };
 		6307EA0A27F5491E00D1DFE6 /* xBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307E9CE27F5491E00D1DFE6 /* xBaseController.m */; };
 		6307EA0B27F5491E00D1DFE6 /* xBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307E9CE27F5491E00D1DFE6 /* xBaseController.m */; };
 		6307EA0C27F5491E00D1DFE6 /* xBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307E9CE27F5491E00D1DFE6 /* xBaseController.m */; };
@@ -102,6 +101,7 @@
 		6331E35327F48499001DFB95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6331E35227F48499001DFB95 /* main.m */; };
 		6331E35D27F48499001DFB95 /* xUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6331E35C27F48499001DFB95 /* xUITests.m */; };
 		6331E36827F48499001DFB95 /* xUIUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6331E36727F48499001DFB95 /* xUIUITests.m */; };
+		C4953A98561595867E1E22F5 /* libPods-xUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146AD5D50B187444BFF37DF8 /* libPods-xUI.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +122,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		146AD5D50B187444BFF37DF8 /* libPods-xUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-xUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		568201B307CCC31B8BFB97DE /* Pods-xUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xUI.debug.xcconfig"; path = "Target Support Files/Pods-xUI/Pods-xUI.debug.xcconfig"; sourceTree = "<group>"; };
 		5F7AA3D8A24FC7E0C1EAEDD7 /* Pods-xUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xUI.release.xcconfig"; path = "Target Support Files/Pods-xUI/Pods-xUI.release.xcconfig"; sourceTree = "<group>"; };
 		6307E9B627F548AE00D1DFE6 /* section-list.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "section-list.jpeg"; sourceTree = "<group>"; };
@@ -223,7 +224,6 @@
 		6331E44027F49D84001DFB95 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		6331E44127F49D84001DFB95 /* xUI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = xUI.podspec; sourceTree = "<group>"; };
 		6331E44227F49D84001DFB95 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		947BAB1CCC3D4BF7A4330E8C /* libPods-xUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-xUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,7 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12059CF7F2385552F9EE91FB /* libPods-xUI.a in Frameworks */,
+				C4953A98561595867E1E22F5 /* libPods-xUI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +474,7 @@
 		B08CF4353CD36A60A194F541 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				947BAB1CCC3D4BF7A4330E8C /* libPods-xUI.a */,
+				146AD5D50B187444BFF37DF8 /* libPods-xUI.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -499,7 +499,7 @@
 				6331E33927F48497001DFB95 /* Sources */,
 				6331E33A27F48497001DFB95 /* Frameworks */,
 				6331E33B27F48497001DFB95 /* Resources */,
-				6BD6ECEEF092679DBDCE849D /* [CP] Copy Pods Resources */,
+				DED8A9BF26E4F29F092B1434 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -619,7 +619,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6BD6ECEEF092679DBDCE849D /* [CP] Copy Pods Resources */ = {
+		DED8A9BF26E4F29F092B1434 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

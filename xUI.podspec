@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'xUI'
-  s.version          = '2.0.0.0'
+  s.version          = '2.0.1.0'
   s.summary          = 'UI基础组件库'
 
   s.description      = <<-DESC
@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.dependency 'Masonry'
   s.dependency 'MJRefresh'
   s.dependency 'PromisesObjC'
+  s.dependency 'ReactiveObjC'
   s.dependency 'SDWebImage'
   s.dependency 'KVOController'
   

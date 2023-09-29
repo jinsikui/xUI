@@ -1,16 +1,22 @@
-
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#if __has_include(<FBLPromises/FBLPromises.h>)
-#import <FBLPromises/FBLPromises.h>
+#if __has_include(<ReactiveObjC/ReactiveObjC.h>)
+#import <ReactiveObjC/ReactiveObjC.h>
 #else
-#import "FBLPromises.h"
+#import "ReactiveObjC.h"
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class xCollectionViewSection;
+
+@interface UICollectionViewCell (xCollectionView)
+
+@property(nonatomic, nullable) NSIndexPath *x_indexPath;
+
+@property(nonatomic, nullable) id x_data;
+
+@end
 
 #pragma mark - 分页/下拉刷新
 
@@ -31,10 +37,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 ///会自动调用reloadData
-typedef FBLPromise<xCollectionViewPageResult*>*_Nullable(^xCollectionViewRefreshCallback)(void);
+typedef RACSignal<xCollectionViewPageResult*>*_Nullable(^xCollectionViewRefreshCallback)(void);
 
 ///会自动调用reloadData
-typedef FBLPromise<xCollectionViewPageResult*>*_Nullable(^xCollectionViewNextPageCallback)(void);
+typedef RACSignal<xCollectionViewPageResult*>*_Nullable(^xCollectionViewNextPageCallback)(void);
 
 #pragma mark - 拖拽排序
 /**
@@ -102,7 +108,7 @@ typedef void(^xCollectionViewMoveCallback)(xCollectionViewMoveData*_Nonnull);
 @property(nonatomic,class) Class defaultRefreshHeaderClass;
 
 //可以通过代码触发refresh
--(FBLPromise<xCollectionViewPageResult*>*)refresh;
+-(RACSignal<xCollectionViewPageResult*>*)refresh;
 
 #pragma mark - 分页
 
@@ -169,9 +175,15 @@ typedef void(^xCollectionViewMoveCallback)(xCollectionViewMoveData*_Nonnull);
 
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 
+-(CGSize)contentSize;
+
 -(void)reloadData;
 
-#pragma mark - size & margin
+#pragma mark - size & margin、
+
+/// 如果为`YES`，当`contentSize`改变时会自动使`intrinsicContentSize`重新计算
+/// 配合外部`UITableView.UITableView.automaticDimension`就能实现cell高度自动根据内容适配
+@property(nonatomic) BOOL isAutoHeight;
 
 @property(nonatomic) CGSize itemSize;
 
@@ -183,7 +195,7 @@ typedef void(^xCollectionViewMoveCallback)(xCollectionViewMoveData*_Nonnull);
 
 @property(nonatomic) CGSize footerSize;
 
-///整个GridView的contentInset
+///整个CollectionView的contentInset
 @property(nonatomic) UIEdgeInsets contentInset;
 
 @property(nonatomic) UIEdgeInsets sectionInset;
@@ -239,3 +251,4 @@ typedef void(^xCollectionViewMoveCallback)(xCollectionViewMoveData*_Nonnull);
 @end
 
 NS_ASSUME_NONNULL_END
+

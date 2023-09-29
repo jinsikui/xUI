@@ -1,7 +1,6 @@
 
 
 #import "xCollectionView.h"
-#import "UICollectionViewCell+xUI.h"
 #import <objc/runtime.h>
 #if __has_include(<Masonry/Masonry.h>)
 #import <Masonry/Masonry.h>
@@ -15,6 +14,28 @@
 #endif
 
 #define xCollectionViewErrorDomain @"xCollectionViewError"
+
+@implementation UICollectionViewCell (xCollectionView)
+
+- (NSIndexPath*)x_indexPath{
+    NSIndexPath *indexPath = objc_getAssociatedObject(self, _cmd);
+    return indexPath;
+}
+
+- (void)setX_indexPath:(NSIndexPath *)x_indexPath{
+    objc_setAssociatedObject(self, @selector(x_indexPath), x_indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (id)x_data{
+    id data = objc_getAssociatedObject(self, _cmd);
+    return data;
+}
+
+- (void)setX_data:(id)x_data{
+    objc_setAssociatedObject(self, @selector(x_data), x_data, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
 
 @interface LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout
 @end
@@ -72,17 +93,14 @@
 @property(nonatomic,strong) UICollectionViewFlowLayout *layout;
 @property(nonatomic,assign) BOOL isLeftAlign;
 
-+(FBLPromise*)_rejectedErrorPromise;
++(RACSignal*)_rejectedErrorSignal;
 
 @end
 
 @implementation xCollectionView
 
-+(FBLPromise*)_rejectedErrorPromise{
-    FBLPromise *promise = FBLPromise.pendingPromise;
-    NSError * eror = [NSError errorWithDomain:xCollectionViewErrorDomain code:-1 userInfo:nil];
-    [promise reject:eror];
-    return promise;
++(RACSignal*)_rejectedErrorSignal{
+    return [RACSignal error:[NSError errorWithDomain:xCollectionViewErrorDomain code:-1 userInfo:nil]];
 }
 
 #pragma mark - 下拉刷新
@@ -121,15 +139,18 @@ static Class _defaultRefreshHeaderClass = nil;
     }
 }
 
--(FBLPromise<xCollectionViewPageResult*>*)refresh{
+-(RACDisposable*)refresh{
     xCollectionViewRefreshCallback refreshCallback = self.refreshCallback;
     if(!refreshCallback){
-        return [xCollectionView _rejectedErrorPromise];
+        return [[xCollectionView _rejectedErrorSignal] subscribeNext:^(id  _Nullable x) {
+            // do nothing, just let the stream execute
+        }];
     }
-    FBLPromise<xCollectionViewPageResult*> *promise = refreshCallback();
-    if(promise){
+    RACSignal<xCollectionViewPageResult*> *signal = refreshCallback();
+    if(signal){
         __weak typeof(self) weak = self;
-        promise.then(^id(xCollectionViewPageResult *result){
+        signal = [signal deliverOn:RACScheduler.mainThreadScheduler];
+        signal = [signal doNext:^(xCollectionViewPageResult * _Nullable result) {
             __strong xCollectionView *s = weak;
             if(!result.ignoreRetData){
                 if(result.pageSectionList){
@@ -161,14 +182,19 @@ static Class _defaultRefreshHeaderClass = nil;
                 [s.collectionView.mj_footer resetNoMoreData];
             }
             s.collectionView.mj_footer.hidden = result.shouldHideFooter;
-            return result;
-        }).always(^{
+            [s.collectionView.mj_header endRefreshing];
+        }];
+        signal = [signal doError:^(NSError * _Nonnull error) {
             [weak.collectionView.mj_header endRefreshing];
-        });
-        return promise;
+        }];
+        return [signal subscribeNext:^(xCollectionViewPageResult * _Nullable x) {
+            // do nothing, just let the stream execute
+        }];
     }
     else{
-        return [xCollectionView _rejectedErrorPromise];
+        return [[xCollectionView _rejectedErrorSignal] subscribeNext:^(id  _Nullable x) {
+            // do nothing, just let the stream execute
+        }];
     }
 }
 
@@ -201,9 +227,10 @@ static Class _defaultRefreshFooterClass = nil;
         self.isScrollEnabled = true;
         __weak typeof(self) weak = self;
         _collectionView.mj_footer = [_refreshFooterClass footerWithRefreshingBlock:^{
-            FBLPromise<xCollectionViewPageResult*> *promise = nextPageCallback();
-            if(promise){
-                promise.then(^id(xCollectionViewPageResult *result){
+            RACSignal<xCollectionViewPageResult*> *signal = nextPageCallback();
+            if(signal){
+                signal = [signal deliverOn:RACScheduler.mainThreadScheduler];
+                signal = [signal doNext:^(xCollectionViewPageResult * _Nullable result) {
                     __strong xCollectionView *s = weak;
                     if(!result.ignoreRetData){
                         if(result.pageDataList){
@@ -243,10 +270,13 @@ static Class _defaultRefreshFooterClass = nil;
                     else{
                         [s.collectionView.mj_footer endRefreshing];
                     }
-                    return nil;
-                }).catch(^(NSError *error){
+                }];
+                signal = [signal doError:^(NSError * _Nonnull error) {
                     [weak.collectionView.mj_footer endRefreshing];
-                });
+                }];
+                [signal subscribeNext:^(xCollectionViewPageResult * _Nullable x) {
+                    // do nothing, just let the stream execute
+                }];
             }
             else{
                 [weak.collectionView.mj_footer endRefreshing];
@@ -587,6 +617,10 @@ static Class _defaultRefreshFooterClass = nil;
     return self.dataSectionList[section].dataList.count;
 }
 
+-(CGSize)contentSize {
+    return self.layout.collectionViewContentSize;
+}
+
 -(void)reloadData{
     [_collectionView reloadData];
 }
@@ -847,6 +881,27 @@ static Class _defaultRefreshFooterClass = nil;
     }
     [_collectionView registerClass:UICollectionReusableView.class forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
     [_collectionView registerClass:UICollectionReusableView.class forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer"];
+    
+    __weak typeof(self) weak = self;
+    [[[_collectionView rac_valuesAndChangesForKeyPath:@"contentSize" options:NSKeyValueObservingOptionOld observer:self] deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
+        CGSize newSize = [tuple.first CGSizeValue] ;
+        NSDictionary *change = tuple.second;
+        CGSize oldSize = [change[NSKeyValueChangeOldKey] CGSizeValue];
+        if (oldSize.height != newSize.height) {
+            if (weak.isAutoHeight) {
+                [weak invalidateIntrinsicContentSize];
+            }
+        }
+    }];
+}
+
+- (CGSize)intrinsicContentSize {
+    if (self.isAutoHeight) {
+        return CGSizeMake(UIViewNoIntrinsicMetric, _collectionView.contentSize.height);
+    }
+    else {
+        return [super intrinsicContentSize];
+    }
 }
 
 -(void)setDataList:(NSArray *)dataList{

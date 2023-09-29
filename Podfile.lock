@@ -21,6 +21,7 @@ PODS:
   - Masonry (1.1.0)
   - MJRefresh (3.7.2)
   - PromisesObjC (2.0.0)
+  - ReactiveObjC (3.1.1)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - Masonry
   - MJRefresh
   - PromisesObjC
+  - ReactiveObjC
   - SDWebImage
   - xUtil (from `https://github.com/jinsikui/xUtil.git`, tag `v2.1.0-0`)
 
@@ -69,6 +71,7 @@ SPEC REPOS:
     - Masonry
     - MJRefresh
     - PromisesObjC
+    - ReactiveObjC
     - SDWebImage
     - SocketRocket
     - YYText
@@ -84,17 +87,18 @@ CHECKOUT OPTIONS:
     :tag: v2.1.0-0
 
 SPEC CHECKSUMS:
-  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   xUtil: 422ef230dc046aff1b8dc860569761dfc5ece880
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a59a8356feba238009a93002d614ce8875519707
+PODFILE CHECKSUM: 0eec72b8f14f88d3d6701239ad6eae65c97632f4
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.12.1
